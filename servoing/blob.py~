@@ -1,0 +1,125 @@
+#!/usr/bin/python
+
+# Standard imports
+import sys
+import cv2
+import subprocess
+import numpy as np
+
+class PiBlob:
+
+    def __init__(self):
+
+        # blob is [ [x,y], size ]
+        self.blob = [ [-1,-1], -1]
+
+        self.im = None
+        
+        # search for blobs that fall in this color range]
+        self.low_color = np.array([0,170,70])
+        self.high_color = np.array([255,255,235])
+
+        # create the blob detector
+        self.params = cv2.SimpleBlobDetector_Params()
+        self.set_detector_params()
+        ver = (cv2.__version__).split('.')
+        if int(ver[0]) < 3 :
+            self.detector = cv2.SimpleBlobDetector(self.params)
+        else : 
+            self.detector = cv2.SimpleBlobDetector_create(self.params)
+
+        #self.cap = cv2.VideoCapture(0)
+
+
+    def set_detector_params(self):
+        # Setup SimpleBlobDetector parameters.
+    
+        # Change thresholds
+        self.params.minThreshold = 0
+        self.params.maxThreshold = 255
+
+        # Filter by Area.
+        self.params.filterByArea = True
+        self.params.minArea = 10
+        self.params.maxArea = 80000
+
+        # Filter by Circularity
+        self.params.filterByCircularity = True
+        self.params.minCircularity = 0.5
+
+        # Filter by Convexity
+        self.params.filterByConvexity = False
+        self.params.minConvexity = 0.01
+            
+        # Filter by Inertia
+        self.params.filterByInertia = False
+        self.params.minInertiaRatio = 0.1
+        
+    def capture(self):
+        subprocess.run(["raspistill","--nopreview","-o","image.jpg"])
+        #with picamera.PiCamera() as camera:
+            #camera.resolution = (480,270)
+            #camera.start_preview()
+            #time.sleep(2)
+            #camera.capture('image.jpg', 'bgr')
+
+    def find_blob(self):
+        
+        self.im = cv2.imread("image.jpg");
+        self.im = cv2.resize(self.im,(480,270))
+
+        hsv_im = cv2.cvtColor(self.im,cv2.COLOR_BGR2HSV)
+      #  cv2.imshow("HSV", hsv_im)
+        # print(hsv[250,150])
+        # cv2.imshow("HSV", hsv)
+        # mask = cv2.inRange(hsv,lower_blue,upper_blue)
+            
+        masked_im = cv2.inRange(hsv_im, self.low_color, self.high_color)
+        masked_im = cv2.bitwise_not(masked_im)
+            
+        #cv2.imshow("masked", masked_im)
+        #input("Press enter to continue ...")
+        
+        #res = cv2.bitwise_and(im,im,mask=mask)
+        # cv2.imshow("masked",res)
+        # print(res)
+        #res2 = cv2.cvtColor(res, cv2.COLOR_GRAY2BGR)
+        
+
+        # Detect blobs.
+        keypoints = self.detector.detect(masked_im)
+
+        for kp in keypoints:
+            self.blob = [ kp.pt, 0 ]
+            
+            #x = kp.pt[0]
+            #y = kp.pt[1]
+            #blob_y_value = y
+            #print(x, y)
+            #s = kp.angle
+           # print(s)
+           # print('')
+
+        # Draw detected blobs as red c ircles.
+        # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
+        # the size of the circle corresponds to the size of blob
+
+        im_with_keypoints = cv2.drawKeypoints(masked_im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+        #nblobs = len(keypoints)
+        #print(nblobs)
+#        if(nblobs > 0):
+ #           driveForward.drive(535,"left")
+       # if(nblobs == 0 ):
+        #    drive.drive(100,"left")
+        #elif(nblobs > 0): #and 130 < x < 150):
+        #    drive.drive(500,"reverse")
+            
+        #Show blobs
+        cv2.imshow("Keypoints", im_with_keypoints)
+        #cv2.waitKey(1)
+        #input("Press any key to continue ...")
+        #cv2.destroyAllWindows();
+         #cam.release()
+
+    

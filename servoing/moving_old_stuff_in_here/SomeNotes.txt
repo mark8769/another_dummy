@@ -1,0 +1,24 @@
+Mark O.P
+5/26/22
+
+Some Notes About Additional Things I have done:
+    
+I moved the include folder, python folder, src folder, test folder
+from a clone I made of someones repo for the lidar lite
+
+These can all be found in
+
+/home/pi/sphero/projects/servoing
+
+I do not know how to import from other directories yet
+So I just copied and pasted the lidar_lite.py file from
+the python folder so I could use the lidar lite with the Sphero RVR
+Im sure there is a way to import from different directories
+or moving files so it works without having duplicates
+but id rather not mess with the project file structure.
+
+When trying to run the program I needed another library
+
+I did
+
+pip install smbus

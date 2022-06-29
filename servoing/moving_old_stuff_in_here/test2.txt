@@ -1,0 +1,860 @@
+Connected
+[Errno 121] Remote I/O error
+[Errno 5] Input/output error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+[Errno 121] Remote I/O error
+Angle:  -90
+Distance:  7
+Obstacle?:  True
+Pos laser point:  -7.0 ,  8.572527594031472e-16
+Current Row Count:  0
+Current Column Count:  0
+
+Angle:  -85
+Distance:  9
+Obstacle?:  True
+Pos laser point:  -8.96575228282571 ,  0.7844016847289237
+Current Row Count:  0
+Current Column Count:  1
+
+Angle:  -80
+Distance:  210
+Obstacle?:  False
+Pos laser point:  -206.8096281325637 ,  36.46611731005536
+Current Row Count:  0
+Current Column Count:  2
+
+Angle:  -75
+Distance:  185
+Obstacle?:  False
+Pos laser point:  -178.6962778634776 ,  47.881523343966386
+Current Row Count:  0
+Current Column Count:  3
+
+Angle:  -70
+Distance:  177
+Obstacle?:  False
+Pos laser point:  -166.32559387910578 ,  60.53756536864339
+Current Row Count:  0
+Current Column Count:  4
+
+Angle:  -65
+Distance:  184
+Obstacle?:  False
+Pos laser point:  -166.7606328147436 ,  77.7617601602887
+Current Row Count:  0
+Current Column Count:  5
+
+Angle:  -60
+Distance:  204
+Obstacle?:  False
+Pos laser point:  -176.6691823720255 ,  101.99999999999999
+Current Row Count:  0
+Current Column Count:  6
+
+Angle:  -55
+Distance:  194
+Obstacle?:  False
+Pos laser point:  -158.91549659206444 ,  111.2738286521029
+Current Row Count:  0
+Current Column Count:  7
+
+Angle:  -50
+Distance:  212
+Obstacle?:  False
+Pos laser point:  -162.4014219412233 ,  136.27097325354637
+Current Row Count:  0
+Current Column Count:  8
+
+Angle:  -45
+Distance:  215
+Obstacle?:  False
+Pos laser point:  -152.0279579551077 ,  152.02795795510772
+Current Row Count:  0
+Current Column Count:  9
+
+Angle:  -40
+Distance:  278
+Obstacle?:  False
+Pos laser point:  -178.69495549285793 ,  212.9603551870759
+Current Row Count:  0
+Current Column Count:  10
+
+Angle:  -35
+Distance:  617
+Obstacle?:  False
+Pos laser point:  -353.89666122859546 ,  505.4168113263079
+Current Row Count:  0
+Current Column Count:  11
+
+Angle:  -30
+Distance:  325
+Obstacle?:  False
+Pos laser point:  -162.49999999999991 ,  281.4582562299426
+Current Row Count:  0
+Current Column Count:  12
+
+Angle:  -25
+Distance:  32
+Obstacle?:  True
+Pos laser point:  -13.523784375702379 ,  29.0018491851728
+Current Row Count:  0
+Current Column Count:  13
+
+Angle:  -20
+Distance:  28
+Obstacle?:  True
+Pos laser point:  -9.576564013118723 ,  26.311393382005434
+Current Row Count:  0
+Current Column Count:  14
+
+Angle:  -15
+Distance:  23
+Obstacle?:  True
+Pos laser point:  -5.95283803735798 ,  22.21629400464857
+Current Row Count:  0
+Current Column Count:  15
+
+Angle:  -10
+Distance:  20
+Obstacle?:  True
+Pos laser point:  -3.472963553338606 ,  19.69615506024416
+Current Row Count:  0
+Current Column Count:  16
+
+Angle:  -5
+Distance:  23
+Obstacle?:  True
+Pos laser point:  -2.0045820831961394 ,  22.912478056110146
+Current Row Count:  0
+Current Column Count:  17
+
+Angle:  0
+Distance:  20
+Obstacle?:  True
+Pos laser point:  1.2246467991473533e-15 ,  20.0
+Current Row Count:  0
+Current Column Count:  18
+
+Angle:  5
+Distance:  22
+Obstacle?:  True
+Pos laser point:  1.917426340448479 ,  21.9162833580184
+Current Row Count:  0
+Current Column Count:  19
+
+Angle:  10
+Distance:  23
+Obstacle?:  True
+Pos laser point:  3.9939080863393994 ,  22.650578319280786
+Current Row Count:  0
+Current Column Count:  20
+
+Angle:  15
+Distance:  23
+Obstacle?:  True
+Pos laser point:  5.952838037357977 ,  22.21629400464857
+Current Row Count:  0
+Current Column Count:  21
+
+Angle:  20
+Distance:  25
+Obstacle?:  True
+Pos laser point:  8.55050358314172 ,  23.492315519647708
+Current Row Count:  0
+Current Column Count:  22
+
+Angle:  25
+Distance:  28
+Obstacle?:  True
+Pos laser point:  11.833311328739585 ,  25.376618037026198
+Current Row Count:  0
+Current Column Count:  23
+
+Angle:  30
+Distance:  28
+Obstacle?:  True
+Pos laser point:  14.000000000000004 ,  24.24871130596428
+Current Row Count:  0
+Current Column Count:  24
+
+Angle:  35
+Distance:  30
+Obstacle?:  True
+Pos laser point:  17.207293090531383 ,  24.574561328669756
+Current Row Count:  0
+Current Column Count:  25
+
+Angle:  40
+Distance:  515
+Obstacle?:  False
+Pos laser point:  331.03561898856776 ,  394.51288820627366
+Current Row Count:  0
+Current Column Count:  26
+
+Angle:  45
+Distance:  560
+Obstacle?:  False
+Pos laser point:  395.9797974644666 ,  395.97979746446657
+Current Row Count:  0
+Current Column Count:  27
+
+Angle:  50
+Distance:  742
+Obstacle?:  False
+Pos laser point:  568.4049767942817 ,  476.94840638741215
+Current Row Count:  0
+Current Column Count:  28
+
+Angle:  55
+Distance:  687
+Obstacle?:  False
+Pos laser point:  562.7574544265374 ,  394.04701177316866
+Current Row Count:  0
+Current Column Count:  29
+
+Angle:  60
+Distance:  644
+Obstacle?:  False
+Pos laser point:  557.7203600371786 ,  321.99999999999994
+Current Row Count:  0
+Current Column Count:  30
+
+Angle:  65
+Distance:  616
+Obstacle?:  False
+Pos laser point:  558.2855968145764 ,  260.33284923227086
+Current Row Count:  0
+Current Column Count:  31
+
+Angle:  70
+Distance:  595
+Obstacle?:  False
+Pos laser point:  559.1171093676155 ,  203.50198527877288
+Current Row Count:  0
+Current Column Count:  32
+
+Angle:  75
+Distance:  581
+Obstacle?:  False
+Pos laser point:  561.2029050739487 ,  150.37386520456454
+Current Row Count:  0
+Current Column Count:  33
+
+Angle:  80
+Distance:  572
+Obstacle?:  False
+Pos laser point:  563.310034722983 ,  99.32675762548415
+Current Row Count:  0
+Current Column Count:  34
+
+Angle:  85
+Distance:  570
+Obstacle?:  False
+Pos laser point:  567.830977912295 ,  49.67877336616515
+Current Row Count:  0
+Current Column Count:  35
+
+Angle:  90
+Distance:  158
+Obstacle?:  False
+Pos laser point:  158.0 ,  0.0
+Current Row Count:  0
+Current Column Count:  36
+
+Angle:  90
+Distance:  147
+Obstacle?:  False
+Pos laser point:  147.0 ,  0.0
+Current Row Count:  1
+Current Column Count:  36
+
+Angle:  85
+Distance:  147
+Obstacle?:  False
+Pos laser point:  146.4406206194866 ,  12.81189418390575
+Current Row Count:  1
+Current Column Count:  35
+
+Angle:  80
+Distance:  155
+Obstacle?:  False
+Pos laser point:  152.64520171689225 ,  26.9154675383742
+Current Row Count:  1
+Current Column Count:  34
+
+Angle:  75
+Distance:  569
+Obstacle?:  False
+Pos laser point:  549.6117951584798 ,  147.2680366633343
+Current Row Count:  1
+Current Column Count:  33
+
+Angle:  70
+Distance:  573
+Obstacle?:  False
+Pos laser point:  538.4438717103255 ,  195.97754212560818
+Current Row Count:  1
+Current Column Count:  32
+
+Angle:  65
+Distance:  582
+Obstacle?:  False
+Pos laser point:  527.4711320553303 ,  245.96382833308706
+Current Row Count:  1
+Current Column Count:  31
+
+Angle:  60
+Distance:  595
+Obstacle?:  False
+Pos laser point:  515.285115251741 ,  297.49999999999994
+Current Row Count:  1
+Current Column Count:  30
+
+Angle:  55
+Distance:  617
+Obstacle?:  False
+Pos laser point:  505.41681132630794 ,  353.8966612285954
+Current Row Count:  1
+Current Column Count:  29
+
+Angle:  50
+Distance:  647
+Obstacle?:  False
+Pos laser point:  495.6307546979788 ,  415.8835834671909
+Current Row Count:  1
+Current Column Count:  28
+
+Angle:  45
+Distance:  687
+Obstacle?:  False
+Pos laser point:  485.7823586751582 ,  485.7823586751581
+Current Row Count:  1
+Current Column Count:  27
+
+Angle:  40
+Distance:  740
+Obstacle?:  False
+Pos laser point:  475.66283116803913 ,  566.8728879080437
+Current Row Count:  1
+Current Column Count:  26
+
+Angle:  35
+Distance:  561
+Obstacle?:  False
+Pos laser point:  321.7763807929369 ,  459.5442968461244
+Current Row Count:  1
+Current Column Count:  25
+
+Angle:  30
+Distance:  517
+Obstacle?:  False
+Pos laser point:  258.50000000000006 ,  447.7351337565548
+Current Row Count:  1
+Current Column Count:  24
+
+Angle:  25
+Distance:  37
+Obstacle?:  True
+Pos laser point:  15.63687568440588 ,  33.53338812035605
+Current Row Count:  1
+Current Column Count:  23
+
+Angle:  20
+Distance:  27
+Obstacle?:  True
+Pos laser point:  9.234543869793058 ,  25.371700761219525
+Current Row Count:  1
+Current Column Count:  22
+
+Angle:  15
+Distance:  27
+Obstacle?:  True
+Pos laser point:  6.98811421776806 ,  26.079997309804845
+Current Row Count:  1
+Current Column Count:  21
+
+Angle:  10
+Distance:  23
+Obstacle?:  True
+Pos laser point:  3.9939080863393994 ,  22.650578319280786
+Current Row Count:  1
+Current Column Count:  20
+
+Angle:  5
+Distance:  25
+Obstacle?:  True
+Pos laser point:  2.1788935686914535 ,  24.90486745229364
+Current Row Count:  1
+Current Column Count:  19
+
+Angle:  0
+Distance:  20
+Obstacle?:  True
+Pos laser point:  1.2246467991473533e-15 ,  20.0
+Current Row Count:  1
+Current Column Count:  18
+
+Angle:  -5
+Distance:  19
+Obstacle?:  True
+Pos laser point:  -1.6559591122055064 ,  18.927699263743165
+Current Row Count:  1
+Current Column Count:  17
+
+Angle:  -10
+Distance:  19
+Obstacle?:  True
+Pos laser point:  -3.299315375671676 ,  18.711347307231954
+Current Row Count:  1
+Current Column Count:  16
+
+Angle:  -15
+Distance:  22
+Obstacle?:  True
+Pos laser point:  -5.694018992255459 ,  21.2503681783595
+Current Row Count:  1
+Current Column Count:  15
+
+Angle:  -20
+Distance:  23
+Obstacle?:  True
+Pos laser point:  -7.86646329649038 ,  21.612930278075893
+Current Row Count:  1
+Current Column Count:  14
+
+Angle:  -25
+Distance:  22
+Obstacle?:  True
+Pos laser point:  -9.297601758295386 ,  19.938771314806303
+Current Row Count:  1
+Current Column Count:  13
+
+Angle:  -30
+Distance:  27
+Obstacle?:  True
+Pos laser point:  -13.499999999999995 ,  23.382685902179844
+Current Row Count:  1
+Current Column Count:  12
+
+Angle:  -35
+Distance:  30
+Obstacle?:  True
+Pos laser point:  -17.207293090531383 ,  24.574561328669752
+Current Row Count:  1
+Current Column Count:  11
+
+Angle:  -40
+Distance:  320
+Obstacle?:  False
+Pos laser point:  -205.6920350996926 ,  245.13422179807296
+Current Row Count:  1
+Current Column Count:  10
+
+Angle:  -45
+Distance:  617
+Obstacle?:  False
+Pos laser point:  -436.28488399209976 ,  436.2848839920999
+Current Row Count:  1
+Current Column Count:  9
+
+Angle:  -50
+Distance:  275
+Obstacle?:  False
+Pos laser point:  -210.66222185771892 ,  176.76659266379835
+Current Row Count:  1
+Current Column Count:  8
+
+Angle:  -55
+Distance:  220
+Obstacle?:  False
+Pos laser point:  -180.21344974357822 ,  126.18681599723011
+Current Row Count:  1
+Current Column Count:  7
+
+Angle:  -60
+Distance:  226
+Obstacle?:  False
+Pos laser point:  -195.72174125528315 ,  112.99999999999999
+Current Row Count:  1
+Current Column Count:  6
+
+Angle:  -65
+Distance:  202
+Obstacle?:  False
+Pos laser point:  -183.07417298140328 ,  85.3688888716213
+Current Row Count:  1
+Current Column Count:  5
+
+Angle:  -70
+Distance:  216
+Obstacle?:  False
+Pos laser point:  -202.9736060897562 ,  73.87635095834447
+Current Row Count:  1
+Current Column Count:  4
+
+Angle:  -75
+Distance:  195
+Obstacle?:  False
+Pos laser point:  -188.3555361263683 ,  50.4697137949916
+Current Row Count:  1
+Current Column Count:  3
+
+Angle:  -80
+Distance:  186
+Obstacle?:  False
+Pos laser point:  -183.1742420602707 ,  32.29856104604903
+Current Row Count:  1
+Current Column Count:  2
+
+Angle:  -85
+Distance:  194
+Obstacle?:  False
+Pos laser point:  -193.26177142979864 ,  16.90821409304569
+Current Row Count:  1
+Current Column Count:  1
+
+Angle:  -90
+Distance:  210
+Obstacle?:  False
+Pos laser point:  -210.0 ,  2.5717582782094416e-14
+Current Row Count:  1
+Current Column Count:  0
+
+Angle:  -90
+Distance:  437
+Obstacle?:  False
+Pos laser point:  -437.0 ,  5.3517065122739335e-14
+Current Row Count:  2
+Current Column Count:  0
+
+Angle:  -85
+Distance:  436
+Obstacle?:  False
+Pos laser point:  -434.34088836800106 ,  37.99990383797897
+Current Row Count:  2
+Current Column Count:  1
+
+Angle:  -80
+Distance:  211
+Obstacle?:  False
+Pos laser point:  -207.7944358855759 ,  36.639765487722286
+Current Row Count:  2
+Current Column Count:  2
+
+Angle:  -75
+Distance:  192
+Obstacle?:  False
+Pos laser point:  -185.4577586475011 ,  49.69325665968404
+Current Row Count:  2
+Current Column Count:  3
+
+Angle:  -70
+Distance:  187
+Obstacle?:  False
+Pos laser point:  -175.72252008696486 ,  63.95776680190008
+Current Row Count:  2
+Current Column Count:  4
+
+Angle:  -65
+Distance:  194
+Obstacle?:  False
+Pos laser point:  -175.8237106851101 ,  81.98794277769571
+Current Row Count:  2
+Current Column Count:  5
+
+Angle:  -60
+Distance:  219
+Obstacle?:  False
+Pos laser point:  -189.65956342879207 ,  109.49999999999999
+Current Row Count:  2
+Current Column Count:  6
+
+Angle:  -55
+Distance:  206
+Obstacle?:  False
+Pos laser point:  -168.74532112353234 ,  118.15674588831547
+Current Row Count:  2
+Current Column Count:  7
+
+Angle:  -50
+Distance:  223
+Obstacle?:  False
+Pos laser point:  -170.82791081553208 ,  143.3416369600983
+Current Row Count:  2
+Current Column Count:  8
+
+Angle:  -45
+Distance:  226
+Obstacle?:  False
+Pos laser point:  -159.80613254815972 ,  159.80613254815975
+Current Row Count:  2
+Current Column Count:  9
+
+Angle:  -40
+Distance:  274
+Obstacle?:  False
+Pos laser point:  -176.12380505411178 ,  209.89617741459998
+Current Row Count:  2
+Current Column Count:  10
+
+Angle:  -35
+Distance:  619
+Obstacle?:  False
+Pos laser point:  -355.0438141012976 ,  507.05511541488585
+Current Row Count:  2
+Current Column Count:  11
+
+Angle:  -30
+Distance:  327
+Obstacle?:  False
+Pos laser point:  -163.49999999999991 ,  283.19030703751145
+Current Row Count:  2
+Current Column Count:  12
+
+Angle:  -25
+Distance:  29
+Obstacle?:  True
+Pos laser point:  -12.25592959048028 ,  26.28292582406285
+Current Row Count:  2
+Current Column Count:  13
+
+Angle:  -20
+Distance:  25
+Obstacle?:  True
+Pos laser point:  -8.550503583141717 ,  23.49231551964771
+Current Row Count:  2
+Current Column Count:  14
+
+Angle:  -15
+Distance:  23
+Obstacle?:  True
+Pos laser point:  -5.95283803735798 ,  22.21629400464857
+Current Row Count:  2
+Current Column Count:  15
+
+Angle:  -10
+Distance:  20
+Obstacle?:  True
+Pos laser point:  -3.472963553338606 ,  19.69615506024416
+Current Row Count:  2
+Current Column Count:  16
+
+Angle:  -5
+Distance:  19
+Obstacle?:  True
+Pos laser point:  -1.6559591122055064 ,  18.927699263743165
+Current Row Count:  2
+Current Column Count:  17
+
+Angle:  0
+Distance:  20
+Obstacle?:  True
+Pos laser point:  1.2246467991473533e-15 ,  20.0
+Current Row Count:  2
+Current Column Count:  18
+
+Angle:  5
+Distance:  22
+Obstacle?:  True
+Pos laser point:  1.917426340448479 ,  21.9162833580184
+Current Row Count:  2
+Current Column Count:  19
+
+Angle:  10
+Distance:  23
+Obstacle?:  True
+Pos laser point:  3.9939080863393994 ,  22.650578319280786
+Current Row Count:  2
+Current Column Count:  20
+
+Angle:  15
+Distance:  24
+Obstacle?:  True
+Pos laser point:  6.211657082460498 ,  23.18221983093764
+Current Row Count:  2
+Current Column Count:  21
+
+Angle:  20
+Distance:  24
+Obstacle?:  True
+Pos laser point:  8.208483439816051 ,  22.5526228988618
+Current Row Count:  2
+Current Column Count:  22
+
+Angle:  25
+Distance:  29
+Obstacle?:  True
+Pos laser point:  12.255929590480283 ,  26.282925824062847
+Current Row Count:  2
+Current Column Count:  23
+
+Angle:  30
+Distance:  30
+Obstacle?:  True
+Pos laser point:  15.000000000000004 ,  25.980762113533157
+Current Row Count:  2
+Current Column Count:  24
+
+Angle:  35
+Distance:  28
+Obstacle?:  True
+Pos laser point:  16.060140217829293 ,  22.93625724009177
+Current Row Count:  2
+Current Column Count:  25
+
+Angle:  40
+Distance:  516
+Obstacle?:  False
+Pos laser point:  331.6784065982543 ,  395.27893264939263
+Current Row Count:  2
+Current Column Count:  26
+
+Angle:  45
+Distance:  562
+Obstacle?:  False
+Pos laser point:  397.39401102683973 ,  397.3940110268397
+Current Row Count:  2
+Current Column Count:  27
+
+Angle:  50
+Distance:  741
+Obstacle?:  False
+Pos laser point:  567.6389323511627 ,  476.3056187777256
+Current Row Count:  2
+Current Column Count:  28
+
+Angle:  55
+Distance:  688
+Obstacle?:  False
+Pos laser point:  563.5766064708264 ,  394.62058820951967
+Current Row Count:  2
+Current Column Count:  29
+
+Angle:  60
+Distance:  644
+Obstacle?:  False
+Pos laser point:  557.7203600371786 ,  321.99999999999994
+Current Row Count:  2
+Current Column Count:  30
+
+Angle:  65
+Distance:  618
+Obstacle?:  False
+Pos laser point:  560.0982123886497 ,  261.17808575575225
+Current Row Count:  2
+Current Column Count:  31
+
+Angle:  70
+Distance:  596
+Obstacle?:  False
+Pos laser point:  560.0568019884014 ,  203.84400542209855
+Current Row Count:  2
+Current Column Count:  32
+
+Angle:  75
+Distance:  582
+Obstacle?:  False
+Pos laser point:  562.1688309002377 ,  150.63268424966708
+Current Row Count:  2
+Current Column Count:  33
+
+Angle:  80
+Distance:  573
+Obstacle?:  False
+Pos laser point:  564.2948424759952 ,  99.50040580315108
+Current Row Count:  2
+Current Column Count:  34
+
+Angle:  85
+Distance:  572
+Obstacle?:  False
+Pos laser point:  569.8233673084784 ,  49.85308485166047
+Current Row Count:  2
+Current Column Count:  35
+
+Angle:  90
+Distance:  158
+Obstacle?:  False
+Pos laser point:  158.0 ,  0.0
+Current Row Count:  2
+Current Column Count:  36
+
+PRINTING LIDAR POINTS
+
+
+Start Obstacle Index:  None
+End Obstacle Index:  1
+X Coordinate:  -7.0
+Y Coordinate:  8.572527594031472e-16
+Passed Start Equation:  False
+Passed End Equation:  True
+Start Obstacle Index:  13
+End Obstacle Index:  25
+X Coordinate:  -13.523784375702379
+Y Coordinate:  29.0018491851728
+Passed Start Equation:  True
+Passed End Equation:  True
+Start Obstacle Index:  11
+End Obstacle Index:  23
+X Coordinate:  -17.207293090531383
+Y Coordinate:  24.574561328669752
+Passed Start Equation:  True
+Passed End Equation:  True
+Start Obstacle Index:  13
+End Obstacle Index:  25
+X Coordinate:  -12.25592959048028
+Y Coordinate:  26.28292582406285
+Passed Start Equation:  True
+Passed End Equation:  True
+
+BEFORE FILTERING
+----------------------------------------
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36  
+----------------------------------------------------------------------------------------------------
+- - 0 0 0 0 0 0 0 0 0  0  0  -  -  -  -  -  -  -  -  -  -  -  -  -  0  0  0  0  0  0  0  0  0  0  0  
+0 0 0 0 0 0 0 0 0 0 0  -  -  -  -  -  -  -  -  -  -  -  -  -  0  0  0  0  0  0  0  0  0  0  0  0  0  
+0 0 0 0 0 0 0 0 0 0 0  0  0  -  -  -  -  -  -  -  -  -  -  -  -  -  0  0  0  0  0  0  0  0  0  0  0  
+
+AFTER FILTERING
+----------------------------------------
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36  
+----------------------------------------------------------------------------------------------------
+- - 0 0 0 0 0 0 0 0 0  0  0  -  -  -  -  -  -  -  -  -  -  -  -  -  0  0  0  0  0  0  0  0  0  0  0  
+0 0 0 0 0 0 0 0 0 0 0  0  0  0  -  -  -  -  -  -  -  -  -  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+0 0 0 0 0 0 0 0 0 0 0  0  0  -  -  -  -  -  -  -  -  -  -  -  -  -  0  0  0  0  0  0  0  0  0  0  0  
+
+
+Checking cluster indexes
+Checking results with filtered list
+-------------------------------------------------
+Filtered list x1:  -183.1742420602707
+Filtered list x2:  15.63687568440588
+Start Index:  -35
+End Index:  23
+X2:  15.63687568440588
+X1:  -17.207293090531383
+Y2:  33.53338812035605
+Y1:  24.574561328669752
+Width of Cluster:  32.84416877493726
+Middle of Cluster:  16.42208438746863
