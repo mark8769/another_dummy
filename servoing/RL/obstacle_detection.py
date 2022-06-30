@@ -130,7 +130,7 @@ def preprocessing_laser_point(point_list):
     for i in range(len(point_list)):
         # our threshold for is_obstacle is if distance is less than 40
         # this is for start[i] section in paper
-        for j in range(1, len(point_list[0])):
+        for j in range(1, len(point_list[0]) - 1):
             if not point_list[i][j - 1].is_obstacle() and point_list[i][j].is_obstacle():
                 point_list[i][j].set_start_wall_index(j)
                 start_index = j

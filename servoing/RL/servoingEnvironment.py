@@ -109,7 +109,9 @@ class ServoingEnvironment:
             distance = 110
         if angle is None:
             angle = 180
-
+        
+        if distance == -1:
+            return self.failState
         # -90, 0, 90 is the way servo scans, all the way to left, middle, all the way to right
         if angle < 0:
             angle = abs(angle) + 90
@@ -138,11 +140,11 @@ class ServoingEnvironment:
             temp_tuple = lidar_entries[i]
             
             if distance < temp_tuple[0]:
-                distance_bin = i
-        if distance_bin is None:
-            distance_bin = 6
+                distance_bin_index = i
+        if distance_bin_index is None:
+            distance_bin_index = 6
         # Combines the blob x-coordinate state and blob size into a single state
-        state = (blobXLocationState * len(self.lidar_distance_dict)) + distance_bin
+        state = (blobXLocationState * len(self.lidar_distance_dict)) + distance_bin_index
         
         self.rvr.led_control.set_all_leds_rgb(red=255, green=165, blue=0)
         

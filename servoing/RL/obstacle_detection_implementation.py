@@ -1,5 +1,6 @@
 from gpiozero import Servo
 import math
+import copy
 import numpy
 from time import sleep
 import sys
@@ -100,7 +101,7 @@ def get_lidar_points():
         # keep getting readings until we dont get -1
         # Edit: apparently after an error, we get about 10-15 bad readings
         # needed to modify this to account for this error
-        # else only most inner while loop needed
+        # else only most inner whil0  0  0  -  -  -  -  -  -  -  -  e loop needed
         # if you're confused, lower the first while loop to 1 - 5 insteaf of 20
         if lidar_distance == -1:
             
@@ -130,22 +131,39 @@ def run_tests():
 
     lidar_points = numpy.empty([3, 37], dtype=object)
     lidar_points = get_lidar_points()
+    # dont want to set obstacle for filtered points, so use this when creating filtered
+    # make a copy, dont want to alias existing list
+    # deepcopy if list contains objects
+    temp_lidar_points = copy.deepcopy(lidar_points)
     lidar_points = preprocessing_laser_point(lidar_points)
     satifies_equations(lidar_points)
     print()
     print("BEFORE FILTERING")
     print("----------------------------------------")
     visualize_points(lidar_points)
+    
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
-    filtered_points, lidar_points = median_filtering(lidar_points)
+    _, lidar_points = median_filtering(lidar_points)
+    filtered_points, temp_lidar_points = median_filtering(temp_lidar_points)
+    
     print()
     print("AFTER FILTERING")
     print("----------------------------------------")
     visualize_points(lidar_points)
     print()
     # [start, end, start, end ......]
-    filtered_points = prep_filtered(filtered_points)
+    filtered_points = preprocessing_laser_point(filtered_points)
+    print("----------DEBUGGING------------")
+    for i in range (len(filtered_points)):
+        for j in range(len(filtered_points[0])):
+            print("Point: ", j) 
+            filtered_points[i][j].print_point()
+            filtered_points[i][j].print_obstacle_range()
+            print("----------------------------------")
+    print("VISUALIZING THE FILTERED POINT LIST")
+    visualize_points(filtered_points)
     cluster_list = add_clusters(filtered_points)
+    
     print()
     print("Checking cluster indexes")
     
@@ -160,11 +178,12 @@ def run_tests():
 def get_servoing_stuff():
 
     lidar_points = numpy.empty([3, 37], dtype=object)
-    lidar_points = get_lidar_points()
-    lidar_points = preprocessing_laser_point(lidar_points)
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
+    
+    lidar_points = get_lidar_points()
     filtered_points, _ = median_filtering(lidar_points)
-    filtered_points = prep_filtered(lidar_points)
+    
+    filtered_points = preprocessing_laser_point(filtered_points)
     cluster_list = add_clusters(filtered_points)
 
     temp_max = 0
@@ -174,24 +193,27 @@ def get_servoing_stuff():
             temp_max = cluster.get_width()
             temp_cluster = cluster
 
-    if temp_cluster is None:
-        return 0
-    else:
-        temp_cluster.print_cluster()
+#     if temp_cluster is None:
+#         return 0
+#     else:
+#         temp_cluster.print_cluster()
     
+    if temp_cluster == None:
+        return -1, -1
     start_index = temp_cluster.get_start_index()
     end_index = temp_cluster.get_end_index()
 
     index_range = end_index - start_index
     index_range = index_range // 2
-
+    
     distance = filtered_points[0][index_range].get_distance()    
     angle = filtered_points[0][index_range].get_angle()
-
+    
     # return the distance of the middle point in the cluster
     # return the angle of the middle point in the cluster
     print("Distance Acquired: ", distance)
     print("Angle Acquired: ", angle)
+    
     return distance, angle
 
 def main():
