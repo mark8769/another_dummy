@@ -95,6 +95,7 @@ def get_lidar_points():
             third_pass = True
         
         set_servo_angle(angle_counter, hitec_servo)
+        sleep(0.06)
         lidar_distance = lidar.getDistance()
         
         # if we get a bad reading, want to do take reading again
@@ -123,7 +124,6 @@ def get_lidar_points():
         lidar_points[row_counter][column_counter] = point
         angle_counter += angle_helper
         column_counter += column_helper
-        sleep(0.01)
     
     return lidar_points
 
@@ -179,22 +179,27 @@ def get_servoing_stuff():
     
     filtered_points = preprocessing_laser_point(filtered_points)
     cluster_list = add_clusters(filtered_points)
-
+    
+    visualize_points(filtered_points)
     temp_max = 0
     temp_cluster = None
     for cluster in cluster_list:
-        if cluster.get_width() > temp_max:
+        
+        temp_range = cluster.get_end_index() - cluster.get_start_index()
+        
+        if temp_range >= temp_max:
             
-            temp_max = abs(cluster.get_width())
+            temp_max = temp_range
             temp_cluster = cluster
 
-#     if temp_cluster is None:
-#         return 0
-#     else:
-#         temp_cluster.print_cluster()
+    if temp_cluster is None:
+        return 0
+    else:
+        temp_cluster.print_cluster()
     
     if temp_cluster == None:
         return -1, -1
+    
     start_index = temp_cluster.get_start_index()
     end_index = temp_cluster.get_end_index()
 
@@ -203,13 +208,18 @@ def get_servoing_stuff():
     
     index_to_access = start_index + index_range
     
+    for i in range(len(filtered_points)):
+        for j in range(start_index, end_index + 1):
+            filtered_points[i][j].print_point()
+    
     distance = filtered_points[0][index_to_access].get_distance()    
     angle = filtered_points[0][index_to_access].get_angle()
-
+    
+    print(angle)
     if angle <= 0:
         angle = abs(angle) + 90
     else:
-        angle = angle - 90
+        angle = abs(angle - 90)
     
     # return the distance of the middle point in the cluster
     # return the angle of the middle point in the cluster
@@ -218,7 +228,8 @@ def get_servoing_stuff():
 
 def main():
 
-    run_tests()
+    #run_tests()
+    #run_tests()
     distance, angle = get_servoing_stuff()
     print("Distance Acquired: ", distance)
     print("Angle Acquired: ", angle)

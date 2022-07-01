@@ -61,7 +61,7 @@ def get_lidar_points():
     lidar_points = []
     # one sweep is 37 points when using 5 degrees of accuracy
     # range from (-90 to 90)
-    lidar_points = numpy.empty([2, 37], dtype=object)
+    lidar_poin-  -  -  -  -  -  -ts = numpy.empty([2, 37], dtype=object)
     #lidar_points = numpy.empty([3, 37], dtype=object)
     #row, col = 3, 37
     #lidar_points = [[0] * col] * row
@@ -98,6 +98,7 @@ def get_lidar_points():
             third_pass = True
         
         set_servo_angle(angle_counter, hitec_servo)
+        sleep(0.06)
         lidar_distance = lidar.getDistance()
         
         # if we get a bad reading, want to do take reading again
@@ -126,7 +127,6 @@ def get_lidar_points():
         lidar_points[row_counter][column_counter] = point
         angle_counter += angle_helper
         column_counter += column_helper
-        sleep(0.01)
     
     return lidar_points
 
@@ -189,18 +189,23 @@ def get_servoing_stuff():
     
     filtered_points = preprocessing_laser_point(filtered_points)
     cluster_list = add_clusters(filtered_points)
-
+    
+    visualize_points(filtered_points)
     temp_max = 0
     temp_cluster = None
     for cluster in cluster_list:
-        if cluster.get_width() > temp_max:
-            temp_max = abs(cluster.get_width())
+        
+        temp_range = cluster.get_end_index() - cluster.get_start_index()
+        
+        if temp_range >= temp_max:
+            
+            temp_max = temp_range
             temp_cluster = cluster
 
-#     if temp_cluster is None:
-#         return 0
-#     else:
-#         temp_cluster.print_cluster()
+    if temp_cluster is None:
+        return 0
+    else:
+        temp_cluster.print_cluster()
     
     if temp_cluster == None:
         return -1, -1
@@ -214,10 +219,11 @@ def get_servoing_stuff():
     distance = filtered_points[0][index_to_access].get_distance()    
     angle = filtered_points[0][index_to_access].get_angle()
     
+    print(angle)
     if angle <= 0:
         angle = abs(angle) + 90
     else:
-        angle = angle - 90
+        angle = abs(angle - 90)
     # return the distance of the middle point in the cluster
     # return the angle of the middle point in the cluster
     
