@@ -12,7 +12,7 @@ class Point():
       self.has_index = False
       # for preprocessing of laser point cloud data
       # part B in paper
-      if distance <= 80:
+      if distance <= 400:
           self.obstacle = True
       else:
           self.obstacle = False
@@ -29,7 +29,7 @@ class Point():
         
         self.distance = new_distance
         
-        if new_distance <= 80:
+        if new_distance <= 400:
             self.obstacle = True
         else:
             self.obstacle = False

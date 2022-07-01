@@ -13,6 +13,7 @@ from obstacle_detection import (
     visualize_points,
     add_clusters,
     median_filtering,
+    median_filtering_two_pass,
     prep_filtered
 )
 from gpiozero.pins.pigpio import PiGPIOFactory
@@ -60,7 +61,8 @@ def get_lidar_points():
     lidar_points = []
     # one sweep is 37 points when using 5 degrees of accuracy
     # range from (-90 to 90)
-    lidar_points = numpy.empty([3, 37], dtype=object)
+    lidar_points = numpy.empty([2, 37], dtype=object)
+    #lidar_points = numpy.empty([3, 37], dtype=object)
     #row, col = 3, 37
     #lidar_points = [[0] * col] * row
     row_counter = 0
@@ -81,8 +83,8 @@ def get_lidar_points():
             column_counter = 36
             row_counter += 1
             # break on third sweep
-            if third_pass:
-                break
+#             if third_pass:
+#                 break
         # if we get past -90 want to sweep back
         if angle_counter < -90:
             angle_counter = -90
@@ -90,6 +92,7 @@ def get_lidar_points():
             column_helper = 1
             column_counter = 0
             row_counter += 1
+            break
             # complete one sweep to left, then right.
             # Set to true, to break on third pass
             third_pass = True
@@ -129,12 +132,14 @@ def get_lidar_points():
 
 def run_tests():
 
-    lidar_points = numpy.empty([3, 37], dtype=object)
+    #lidar_points = numpy.empty([3, 37], dtype=object)
+    lidar_points = numpy.empty([2, 37], dtype=object)
     lidar_points = get_lidar_points()
     # dont want to set obstacle for filtered points, so use this when creating filtered
     # make a copy, dont want to alias existing list
     # deepcopy if list contains objects
     temp_lidar_points = copy.deepcopy(lidar_points)
+    #print_all_points(lidar_points)
     lidar_points = preprocessing_laser_point(lidar_points)
     satifies_equations(lidar_points)
     print()
@@ -143,8 +148,8 @@ def run_tests():
     visualize_points(lidar_points)
     
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
-    _, lidar_points = median_filtering(lidar_points)
-    filtered_points, temp_lidar_points = median_filtering(temp_lidar_points)
+    _, lidar_points = median_filtering_two_pass(lidar_points)
+    filtered_points, temp_lidar_points = median_filtering_two_pass(temp_lidar_points)
     
     print()
     print("AFTER FILTERING")
@@ -152,14 +157,12 @@ def run_tests():
     visualize_points(lidar_points)
     print()
     # [start, end, start, end ......]
+    print("Debugging")
+    print(filtered_points)
+    #visualize_points(filtered_points)
+    #print_all_points(filtered_points)
     filtered_points = preprocessing_laser_point(filtered_points)
-    print("----------DEBUGGING------------")
-    for i in range (len(filtered_points)):
-        for j in range(len(filtered_points[0])):
-            print("Point: ", j) 
-            filtered_points[i][j].print_point()
-            filtered_points[i][j].print_obstacle_range()
-            print("----------------------------------")
+
     print("VISUALIZING THE FILTERED POINT LIST")
     visualize_points(filtered_points)
     cluster_list = add_clusters(filtered_points)
@@ -177,11 +180,12 @@ def run_tests():
         
 def get_servoing_stuff():
 
-    lidar_points = numpy.empty([3, 37], dtype=object)
+    #lidar_points = numpy.empty([3, 37], dtype=object)
+    lidar_points = numpy.empty([2, 37], dtype=object)
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
     
     lidar_points = get_lidar_points()
-    filtered_points, _ = median_filtering(lidar_points)
+    filtered_points, _ = median_filtering_two_pass(lidar_points)
     
     filtered_points = preprocessing_laser_point(filtered_points)
     cluster_list = add_clusters(filtered_points)
@@ -190,7 +194,7 @@ def get_servoing_stuff():
     temp_cluster = None
     for cluster in cluster_list:
         if cluster.get_width() > temp_max:
-            temp_max = cluster.get_width()
+            temp_max = abs(cluster.get_width())
             temp_cluster = cluster
 
 #     if temp_cluster is None:
@@ -205,22 +209,29 @@ def get_servoing_stuff():
 
     index_range = end_index - start_index
     index_range = index_range // 2
+    index_to_access = start_index + index_range
     
-    distance = filtered_points[0][index_range].get_distance()    
-    angle = filtered_points[0][index_range].get_angle()
+    distance = filtered_points[0][index_to_access].get_distance()    
+    angle = filtered_points[0][index_to_access].get_angle()
     
+    if angle <= 0:
+        angle = abs(angle) + 90
+    else:
+        angle = angle - 90
     # return the distance of the middle point in the cluster
     # return the angle of the middle point in the cluster
-    print("Distance Acquired: ", distance)
-    print("Angle Acquired: ", angle)
     
     return distance, angle
 
 def main():
 
-    run_tests()
+    #run_tests()
     distance, angle = get_servoing_stuff()
+    print("Distance Acquired: ", distance)
+    print("Angle Acquired: ", angle)
     distance, angle = get_servoing_stuff()
+    print("Distance Acquired: ", distance)
+    print("Angle Acquired: ", angle)
     
 if __name__ == '__main__':
     main()

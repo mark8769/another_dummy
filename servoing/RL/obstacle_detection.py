@@ -78,6 +78,34 @@ def median_filtering(lidar_points):
     # return single row filtered list, and ignore other 2 scans?
     return filtered_points, lidar_points
 
+def median_filtering_two_pass(lidar_points):
+    
+    average = 0
+    sum = 0
+
+    filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
+    # grab first and last values as we wont be modifying them at all
+    filtered_points[0][0] = lidar_points[1][0]
+    filtered_points[0][len(lidar_points[0]) - 1] = lidar_points[1][len(lidar_points[0]) - 1]
+    
+    for t in range (1, 2):
+        for i in range(1, len(lidar_points[0]) - 1):
+
+            first = lidar_points[t - 1][i - 1].get_distance()
+            second = lidar_points[t - 1][i].get_distance()
+            third = lidar_points[t - 1][i].get_distance()
+            fourth = lidar_points[t][i - 1].get_distance()
+            fifth = lidar_points[t][i].get_distance()
+            sixth = lidar_points[t][i + 1].get_distance()
+            
+            sum = first + second + third + fourth + fifth + sixth
+            average = int(sum / 6)
+            
+            lidar_points[t][i].set_distance(average)
+            filtered_points[t - 1][i] = lidar_points[t][i]
+            
+    return filtered_points, lidar_points
+
 
 def satifies_equations(lidar_point_list):
                 
