@@ -6,7 +6,6 @@ class Point():
       self.y = y
       self.distance = distance
       self.angle = angle
-      # TODO: Get rid of this instance variable?
       self.start_wall_index = None
       self.end_wall_index = None
       self.has_index = False

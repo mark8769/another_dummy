@@ -1,4 +1,13 @@
+'''
+cluster.py
 
+Created - Mark Ortega-Ponce
+
+Purpose: To store relevant information about obstacles found.
+        We store start_index to access it in the filtered list.
+        Note: I might just want to keep a list of points
+        from start_index to end_index. But this was a quick class
+'''
 
 class Cluster():
     def __init__(self, angle, angle_two, start, end, x_one, x_two, y_one, y_two, dist_one, dist_two):

@@ -1,6 +1,15 @@
 '''
-Mark Ortega-Ponce
-Created - 6/x/22
+obstacle_detection.py
+
+Created - Mark Ortega-Ponce
+
+Purpose: To find obstacles from 
+        scanning our lidar in a 180 degree view.
+        Goal is to move towards objects found, so
+        contradictory to filename. Obstacle
+        avoidance parts in paper have been ignored
+        for now.
+
 Source: https://www.researchgate.net/publication/308818311_The_obstacle_detection_and_obstacle_avoidance_algorithm_based_on_2-D_lidar
 Download link on the website
 '''
@@ -27,59 +36,75 @@ def position_laser_point(angle_i, distance):
     
     return point_xi, point_yi
 
-# pass an array of values? Make array of tuples?
-# this is to filter out noise, not necessary to work
-# try implementing after?
-def median_filtering(lidar_points):
+def position_laser_point_tilt(angle_i, distance):
+    pass
 
+def median_filtering(lidar_points):
     '''
-    Only modifying the second row
-    Lidar points contains 3 rows of lidar points
-    All are the same scans, some contain noise, some dont
-    Never modify first row because we'll get out of bounds
-    Similar with last row.
-    '''
-    
+    Filter out noise in the sweeps.
+    We do three sweeps, starting from -90: 90, 90: -90, -90: 90
+    We average the middle sweep with surrounding values
+    to filted out any noise.
+    '''    
     average = 0
     sum = 0
 
+    # Create a single row list, with however many points we are collecting
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
-    # grab first and last values as we wont be modifying them at all
+    # grab first and last points as we won't be able to modify them
+    # with the way the paper did it
     filtered_points[0][0] = lidar_points[1][0]
     filtered_points[0][len(lidar_points[0]) - 1] = lidar_points[1][len(lidar_points[0]) - 1]
     
+    # Iterate over rows starting at 1, ending one before last value
     for t in range (1, len(lidar_points) - 1):
         # want to look at previous, current, next_point
         # start index at 1, end 1 before last
         # prevent out of bounds for both start and end
         sum = 0
         for i in range (1, len(lidar_points[0]) - 1):
-
+            # Grabbing first sweep values
+            # Point prev, point curr, point next
             first = lidar_points[t - 1][i - 1].get_distance()
             second = lidar_points[t - 1][i].get_distance()
             third = lidar_points[t - 1][i].get_distance()
+            # Grabbing second sweep values
+            # Point prev, point curr, point next
             fourth = lidar_points[t][i - 1].get_distance()
             fifth = lidar_points[t][i].get_distance()
             sixth = lidar_points[t][i + 1].get_distance()
+            # Grabbing third sweep values
+            # Point prev, point curr, point next
             seventh = lidar_points[t + 1][i - 1].get_distance()
             eight = lidar_points[t + 1][i].get_distance()
             ninth = lidar_points[t + 1][i + 1].get_distance()
 
+            # Add all points we gathered from above
             sum = first + second + third + fourth
             sum += fifth + sixth + seventh + eight + ninth
             # float division first, then round down
             average = int(sum / 9)
-
+            # Assign new distance value which is the average
+            # of all the points adjacent to it.
+            # Eg. top/bottom, adjacent left/right, diagonal corners
+            # Eg. A cube {0, 0, 0       {0, x, x, x, 0  Move to next column, repeat.
+            #             0, M, 0   -->  0, x, M, x, 0
+            #             0, 0, 0}       0, x, x, x, 0}
+            # Modifying M only, which is current point being iterated over.
             lidar_points[t][i].set_distance(average)
             filtered_points[t - 1][i] = lidar_points[t][i]
 
-            #visualize_points(lidar_points)
-
-    # return single row filtered list, and ignore other 2 scans?
+    # return single list because thats all we care about
+    # return single row filtered list, return original list
     return filtered_points, lidar_points
 
 def median_filtering_two_pass(lidar_points):
-    
+    '''
+    Filter out noise in the sweeps.
+    We do three sweeps, starting from -90: 90, 90: -90, -90: 90
+    We average the middle sweep with surrounding values
+    to filted out any noise.
+    '''    
     average = 0
     sum = 0
 
@@ -106,58 +131,19 @@ def median_filtering_two_pass(lidar_points):
             
     return filtered_points, lidar_points
 
-
-def satifies_equations(lidar_point_list):
-                
-    for i in range (len(lidar_point_list)):
-        for j in range (len(lidar_point_list[0])):
-            if lidar_point_list[i][j].get_has_index():
-                lidar_point_list[i][j].print_obstacle_range()
-                print("Passed Start Equation: ", satifies_start_equation(lidar_point_list, i, j))
-                print("Passed End Equation: ", satifies_end_equation(lidar_point_list, i, j))
-            
-def satifies_start_equation(lidar_point_list, row, col):
-    
-    index = lidar_point_list[row][col].get_start_wall_index()
-    
-    previous_point = index - 1
-    current_point = index
-    
-    if not lidar_point_list[row][previous_point].is_obstacle() and lidar_point_list[row][current_point].is_obstacle():
-        return True
-    else:
-        return False
-    
-def satifies_end_equation(lidar_point_list, row, col):
-    
-    index = lidar_point_list[row][col].get_end_wall_index()
-    current_point = index
-    next_point = index + 1
-
-    if lidar_point_list[row][current_point].is_obstacle() and not lidar_point_list[row][next_point].is_obstacle():
-        return True
-    else:
-        return False
-    
-    
-def prep_filtered(point_list):
-    
-    for i in range(len(point_list)):
-        for j in range(len(point_list[0])):
-            if point_list[i][j].get_distance() < 80:
-                point_list[i][j].set_is_obstacle(True)
-            else:
-                point_list[i][j].set_is_obstacle(False)
-                
-    return point_list
-
+'''
+This function checks the lidar point cloud data.
+It follows the formulas for finding start_index and end_index values
+found in the paper. If a point is found to have a start index
+we keep a temp value with the current index where start was found.
+Once we find a point that IS not an obstacle, we update the end_index value
+of where we first found the starting point of our obstacle.
+'''
 def preprocessing_laser_point(point_list):
 
     start_index = 0
     
     for i in range(len(point_list)):
-        # our threshold for is_obstacle is if distance is less than 40
-        # this is for start[i] section in paper
         for j in range(1, len(point_list[0]) - 1):
             if not point_list[i][j - 1].is_obstacle() and point_list[i][j].is_obstacle():
                 point_list[i][j].set_start_wall_index(j)
@@ -166,45 +152,11 @@ def preprocessing_laser_point(point_list):
                 point_list[i][start_index].set_end_wall_index(j)
                 
     return point_list
-            
+
+# TODO: Not really needed, this is for obstacle avoidance.
 def prepocessing_separation(point_list):
     #for i in range(1, len(point_list)):
     pass
-
-def print_all_points(lidar_points):
-
-    print()
-    print("Row size: ",len(lidar_points))
-    print("Column size: ", len(lidar_points[0]))
-    print("TESTING---------------------------------------------")
-    for i in range(len(lidar_points)):
-        for j in range(len(lidar_points[0])):
-            lidar_points[i][j].print_point()
-
-def visualize_points(lidar_points):
-    #print column numbers to visualize the data
-    for i in range(1):
-        for j in range(len(lidar_points[0])):
-            if lidar_points[i][j].get_angle() == 90:
-                print(j, end="  ")
-            else:
-                print(j, end=" ")
-    
-    print()
-    print("----------------------------------------------------------------------------------------------------")
-    string = " "
-    for i in range(len(lidar_points)):
-        if i != 0:
-            print()
-        string = " "
-        for j in range(len(lidar_points[0])):
-            if j > 9:
-                string = "  "
-            if lidar_points[i][j].is_obstacle():
-                print("-", end=string)
-            else:
-                print("0", end=string)
-    print()
 
 def add_clusters(lidar_points):
 
@@ -215,27 +167,32 @@ def add_clusters(lidar_points):
     y_one = None
     x_one = None
     y_two = None
-    distance = None
+    dist_one = None
+    dist_two = None
     angle = None
     angle_two = None
     
     for i in range(len(lidar_points)):
         for j in range(len(lidar_points[0])):
             if lidar_points[i][j].get_has_index():
+                
+                # Current cluster signature
+                # def __init__(self, angle, angle_two, start, end, x_one, x_two, y_one, y_two, dist_one, dist_two):
                 temp_start = lidar_points[i][j].get_start_wall_index()
                 temp_end = lidar_points[i][j].get_end_wall_index()
+
                 x_one = lidar_points[i][temp_start].get_x()
                 x_two = lidar_points[i][temp_end].get_x()
+
                 y_one = lidar_points[i][temp_start].get_y()
                 y_two = lidar_points[i][temp_end].get_y()
+
                 angle = lidar_points[i][temp_start].get_angle()
-                angle_two = lidar_points[i][temp_start].get_angle()
+                angle_two = lidar_points[i][temp_end].get_angle()
+
                 dist_one = lidar_points[i][temp_start].get_distance()
                 dist_two = lidar_points[i][temp_end].get_distance()
                 cluster = Cluster(angle, angle_two, temp_start, temp_end, x_one, x_two, y_one, y_two, dist_one, dist_two)
                 cluster_list.append(cluster)
-
-    #print(len(cluster_list))
-    #print(cluster_list)
 
     return cluster_list
