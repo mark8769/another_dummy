@@ -11,12 +11,12 @@ Purpose: Helper functions for obstacle detection
 
 '''
 Function to visualize cloud point data gathered.
-
 '''
 def visualize_points(lidar_points):
     
     # Print column numbers only.
     for i in range(1):
+        # Iterate over the row count
         for j in range(len(lidar_points[0])):
             if lidar_points[i][j].get_angle() == 90:
                 print(j, end="  ")
@@ -40,6 +40,8 @@ def visualize_points(lidar_points):
 
 '''
 Function to print all points inside a lidar point cloud data list.
+Point info consists of x, y, angle, distance.
+Is the point an obstacle, and so on. 
 '''
 def print_all_points(lidar_points):
 

@@ -1,4 +1,30 @@
-# trying this from stack overflow
+'''
+lidar_test.py
+
+Created - Mark Ortega-Ponce
+
+7/x/2022
+
+Purpose: Helper file to get the correct measurements from the lidar sensor.
+        During testing, I found that I was picking up the measurement from
+        previous angle and saving it to the new angle. Eg. I set the motor angle,
+        take the measurement from the lidar sensor, save prev angle in curr. angle.
+
+        Solution was to add some delay after setting motor angle, since we are using this in
+        RL we want to reduce the amount of sleep time to as low as we can. Time asleep
+        can be reduced the smaller jumps in angle you make, the bigger the jumps the more
+        sleep time is needed.
+
+        Example information: current angle = 20, distance = 40
+
+        set_motor_angle(50)
+
+        angle_50_distance = get_distance()
+        print(angle_50_distance) --> 40
+        set_motor_angle(20)
+        angle_20_distance = get_distance()
+        print(angle_20_distance) --> 100
+'''
 import sys
 from gpiozero import Servo
 import math

@@ -134,7 +134,7 @@ class ServoingEnvironment:
                 break
                 
         if distance_bin_index is None:
-            distance_bin_index = len(lidar_distance_dict) - 1
+            distance_bin_index = len(self.lidar_distance_dict) - 1
 
         # Combines the blob x-coordinate state and blob size into a single state
         state = (blobXLocationState * len(self.lidar_distance_dict)) + distance_bin_index
@@ -142,7 +142,6 @@ class ServoingEnvironment:
         self.rvr.led_control.set_all_leds_rgb(red=255, green=165, blue=0)
         
         return state
-
 
     def step(self, action):
         # Send action command to robot and get next state.
@@ -175,4 +174,3 @@ class ServoingEnvironment:
             self.rvr.led_control.set_all_leds_rgb(red=255, green=165, blue=0)
         # Debugging: print(f"End of Step(): New State: {new_state}, Reward: {reward}, Complete Status {completeStatus}")
         return new_state, reward, completeStatus
-

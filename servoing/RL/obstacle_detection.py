@@ -20,7 +20,6 @@ from cluster import Cluster
 
 def position_laser_point(angle_i, distance):
     # converting angle to radians for math.cos() function
-
     # if we get a -90 means we want to subtract 90
     # take the abs and get back 180 to follow the degrees in a unit circle
     angle_i = angle_i - 90
@@ -36,8 +35,23 @@ def position_laser_point(angle_i, distance):
     
     return point_xi, point_yi
 
-def position_laser_point_tilt(angle_i, distance):
-    pass
+def position_laser_point_pan_tilt(angle_i, tilt_angle, distance):
+
+    angle_i = angle_i - 90
+    angle_i = abs(angle_i)
+
+    # Math.sin/cos functions take angles in radians.
+    angle_in_radians = math.radians(angle_i)
+    tilt_angle_in_radians = math.radians(tilt_angle)
+
+    '''
+    Xi = Ri * cos(i) * cos(alpha)
+    Yi = Ri * sin(i) * cos(alpha)
+    Paper range: i in the set of (0, 190) or (-5, 185, actual angles being used)
+    Our range: i in the set of (0, 180) or (0, 180) so we exclude the -5 they use.
+    '''
+    point_xi = distance * math.cos(angle_in_radians) * math.cos(tilt_angle_in_radians)
+    point_yi = distance * math.sin(angle_in_radians) * math.cos(tile_angle_in_radians)    
 
 def median_filtering(lidar_points):
     '''
@@ -49,7 +63,7 @@ def median_filtering(lidar_points):
     average = 0
     sum = 0
 
-    # Create a single row list, with however many points we are collecting
+    # Create a single row list, same column size as lidar_points
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
     # grab first and last points as we won't be able to modify them
     # with the way the paper did it
@@ -100,10 +114,12 @@ def median_filtering(lidar_points):
 
 def median_filtering_two_pass(lidar_points):
     '''
+    Median filtering for only two passes.
+    3 passes found to be too slow in the RL environment.
     Filter out noise in the sweeps.
-    We do three sweeps, starting from -90: 90, 90: -90, -90: 90
-    We average the middle sweep with surrounding values
-    to filted out any noise.
+    Sweep from -90 to 90.
+    Sweep from 90 back to -90.
+    Start over again.
     '''    
     average = 0
     sum = 0

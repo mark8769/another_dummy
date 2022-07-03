@@ -1,3 +1,15 @@
+'''
+Point.py
+
+Created - Mark Ortega-Ponce
+
+6/x/22
+
+Purpose: Store lidar point cloud data 
+        from scanning an environment.
+'''
+obstacle_threshold = 400
+
 class Point():
     
     def __init__(self, x, y, distance, angle):
@@ -11,7 +23,7 @@ class Point():
       self.has_index = False
       # for preprocessing of laser point cloud data
       # part B in paper
-      if distance <= 400:
+      if distance <= obstacle_threshold:
           self.obstacle = True
       else:
           self.obstacle = False
@@ -24,18 +36,23 @@ class Point():
         return self.angle
     def get_distance(self):
         return self.distance
+    def get_has_index(self):
+        return self.has_index
     def set_distance(self, new_distance):
         
         self.distance = new_distance
         
-        if new_distance <= 400:
+        if new_distance <= obstacle_threshold:
             self.obstacle = True
         else:
             self.obstacle = False
-            
+        
     def set_start_wall_index(self, index):
         self.has_index = True
         self.start_wall_index = index
+    def set_end_wall_index(self, index):
+        self.end_wall_index = index
+        self.has_index = True
     def get_start_wall_index(self):
         if self.start_wall_index is None:
             return -1
@@ -47,15 +64,12 @@ class Point():
         else:
             return self.end_wall_index
         
-    def get_has_index(self):
-        return self.has_index
-    def set_end_wall_index(self, index):
-        self.end_wall_index = index
-        self.has_index = True
     def set_is_obstacle(self, boolean_value):
         self.obstacle = boolean_value
     def is_obstacle (self):
         return self.obstacle
+
+    
     def print_point(self):
         print("Angle: ", self.angle)
         print("Distance: ", self.distance)
