@@ -58,7 +58,7 @@ def median_filtering(lidar_points):
     Filter out noise in the sweeps.
     We do three sweeps, starting from -90: 90, 90: -90, -90: 90
     We average the middle sweep with surrounding values
-    to filted out any noise.
+    to filter out any noise.
     '''    
     average = 0
     sum = 0
@@ -161,12 +161,20 @@ def preprocessing_laser_point(point_list):
     
     for i in range(len(point_list)):
         for j in range(1, len(point_list[0]) - 1):
+        
             if not point_list[i][j - 1].is_obstacle() and point_list[i][j].is_obstacle():
                 point_list[i][j].set_start_wall_index(j)
                 start_index = j
             if point_list[i][j].is_obstacle() and not point_list[i][j + 1].is_obstacle():
                 point_list[i][start_index].set_end_wall_index(j)
-                
+        
+        
+            if not point_list[i][j - 1].is_wall() and point_list[i][j].is_wall():
+                point_list[i][j].set_start_w_index(j)
+                start_index = j
+            if point_list[i][j].is_wall() and not point_list[i][j + 1].is_wall():
+                point_list[i][start_index].set_end_wall_index(j)
+        
     return point_list
 
 # TODO: Not really needed, this is for obstacle avoidance.
@@ -208,7 +216,17 @@ def add_clusters(lidar_points):
 
                 dist_one = lidar_points[i][temp_start].get_distance()
                 dist_two = lidar_points[i][temp_end].get_distance()
+                
                 cluster = Cluster(angle, angle_two, temp_start, temp_end, x_one, x_two, y_one, y_two, dist_one, dist_two)
                 cluster_list.append(cluster)
 
     return cluster_list
+
+# def add_clusters_to_list(lidar_points):
+#     
+#     temp_wall_index = None
+#     temp_start_obs_index = None
+#     temp_end_obs_index = None
+#     for i in range(len(lidar_points)):
+                
+                

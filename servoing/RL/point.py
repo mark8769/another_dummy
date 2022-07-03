@@ -18,6 +18,12 @@ class Point():
       self.y = y
       self.distance = distance
       self.angle = angle
+      
+      self.start_nothing_index = None
+      self.end_nothing_index = None
+      self.wall = False
+      self.has_wall_index = False
+      
       self.start_wall_index = None
       self.end_wall_index = None
       self.has_index = False
@@ -27,6 +33,7 @@ class Point():
           self.obstacle = True
       else:
           self.obstacle = False
+          self.wall = True
     
     def get_x(self):
         return self.x
@@ -46,6 +53,7 @@ class Point():
             self.obstacle = True
         else:
             self.obstacle = False
+            self.wall = True
         
     def set_start_wall_index(self, index):
         self.has_index = True
@@ -53,6 +61,11 @@ class Point():
     def set_end_wall_index(self, index):
         self.end_wall_index = index
         self.has_index = True
+    
+    def set_start_w_index(self, index):
+        self.has_wall_index = True
+        self.start_w_index = index
+        
     def get_start_wall_index(self):
         if self.start_wall_index is None:
             return -1
@@ -68,7 +81,8 @@ class Point():
         self.obstacle = boolean_value
     def is_obstacle (self):
         return self.obstacle
-
+    def is_wall (self):
+        return self.wall
     
     def print_point(self):
         print("Angle: ", self.angle)
