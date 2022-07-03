@@ -18,10 +18,9 @@ def visualize_points(lidar_points):
     for i in range(1):
         # Iterate over the row count
         for j in range(len(lidar_points[0])):
-            if lidar_points[i][j].get_angle() == 90:
-                print(j, end="  ")
-            else:
-                print(j, end=" ")
+            # print on same line
+            # modify end of print to be space instead of newlines
+            print(j, end=' ')
     print()
     print("----------------------------------------------------------------------------------------------------")
     string = " "

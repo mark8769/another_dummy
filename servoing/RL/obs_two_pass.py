@@ -7,14 +7,15 @@ import sys
 from point import Point
 from obstacle_detection import (
     position_laser_point,
-    satifies_equations,
     preprocessing_laser_point,
-    print_all_points,
-    visualize_points,
     add_clusters,
     median_filtering,
-    median_filtering_two_pass,
-    prep_filtered
+    median_filtering_two_pass
+)
+from obstacle_detection_helper import (
+    satifies_equations,
+    print_all_points,
+    visualize_points
 )
 from gpiozero.pins.pigpio import PiGPIOFactory
 # get lidar_lite file from python folder
@@ -24,7 +25,10 @@ from lidar_lite import Lidar_Lite
 factory = PiGPIOFactory()
 # set up servo, GPIO pin 12, min_pulse = .45ms, max_pulse = 2.45ms, use hardware
 # https://hitecrcd.com/files/Servomanual.pdf
-hitec_servo = Servo(12, min_pulse_width=.45/1000, max_pulse_width=2.45/1000, pin_factory=factory)
+#Edit July something
+# prev min .45, prev max = 2.45
+# Hitec datasheet found in some box, conveniently using same servo
+hitec_servo = Servo(12, min_pulse_width=.58/1000, max_pulse_width=2.38/1000, pin_factory=factory)
 # set up lidar lite
 lidar = Lidar_Lite()
 # check if lidar is connected
@@ -203,12 +207,12 @@ def get_servoing_stuff():
             temp_cluster = cluster
 
     if temp_cluster is None:
-        return 0
+        return -1, -1 
     else:
-        temp_cluster.print_cluster()
+        print("Acquired object")
+        #temp_cluster.print_cluster()
+        
     
-    if temp_cluster == None:
-        return -1, -1
     start_index = temp_cluster.get_start_index()
     end_index = temp_cluster.get_end_index()
 
@@ -227,17 +231,15 @@ def get_servoing_stuff():
     # return the distance of the middle point in the cluster
     # return the angle of the middle point in the cluster
     
+    print("Distance Acquired: ", distance)
+    print("Angle Acquired: ", angle)
     return distance, angle
 
 def main():
 
     #run_tests()
     distance, angle = get_servoing_stuff()
-    print("Distance Acquired: ", distance)
-    print("Angle Acquired: ", angle)
     distance, angle = get_servoing_stuff()
-    print("Distance Acquired: ", distance)
-    print("Angle Acquired: ", angle)
     
 if __name__ == '__main__':
     main()

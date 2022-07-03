@@ -8,9 +8,9 @@ Created - Mark Ortega-Ponce
 Purpose: Store lidar point cloud data 
         from scanning an environment.
 '''
-obstacle_threshold = 400
-
 class Point():
+    
+    obstacle_threshold = 400
     
     def __init__(self, x, y, distance, angle):
       
@@ -23,7 +23,7 @@ class Point():
       self.has_index = False
       # for preprocessing of laser point cloud data
       # part B in paper
-      if distance <= obstacle_threshold:
+      if distance <= Point.obstacle_threshold:
           self.obstacle = True
       else:
           self.obstacle = False
@@ -42,7 +42,7 @@ class Point():
         
         self.distance = new_distance
         
-        if new_distance <= obstacle_threshold:
+        if new_distance <= Point.obstacle_threshold:
             self.obstacle = True
         else:
             self.obstacle = False

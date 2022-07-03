@@ -56,6 +56,7 @@ class ServoingEnvironment:
         self.numActions = len(self.actions)
         
         # Sets the number of vertical bins the frame is sliced into
+        # Curr for lidar = 7 also, the pi slices.
         self.image_divisions = 7
         # This would be about our 7 divisions
         # X could be somewhere in here
@@ -119,7 +120,19 @@ class ServoingEnvironment:
         # My sliced would be the pi slices from a unit circle
         # So my "image width" would be 180 to get the index of whatever I have in the dict
         # this would be the index value for where object is located
-        blobXLocationState = int(angle * self.image_divisions / 180)
+        #blobXLocationState = int(angle * self.image_divisions / 180) ;;TODO: Check on Tuesday
+        angle_entries = self.lidar_angle_dict.items()
+        angle_entries = list(angle_entries)
+        angle_bin_index = None
+        
+        for tup in angle_entries:
+            if angle < tup[0]:
+                angle_bin_index = tup[1]
+                break  
+        if angle_bin_index is None:
+            angle_bin_index = len(self.lidar_angle_dict) - 1
+        
+        blobXLocationState = angle_bin_index
         # pull dict items into a list of tuples, dict_items object
         lidar_entries = self.lidar_distance_dict.items()
         # dict_items list not subscriptable, cast to list
@@ -128,7 +141,6 @@ class ServoingEnvironment:
         distance_bin_index = None
         
         for tup in lidar_entries:
-            
             if distance < tup[0]:
                 distance_bin_index = tup[1]
                 break

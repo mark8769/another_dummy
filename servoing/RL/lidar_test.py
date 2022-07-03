@@ -35,8 +35,10 @@ sys.path.append('python/')
 from lidar_lite import Lidar_Lite
 # set up PiGPIOFactory to use hardware and not software pwm
 factory = PiGPIOFactory()
-hitec_servo = Servo(12, min_pulse_width=.45/1000, max_pulse_width=2.45/1000, pin_factory=factory)
-
+#Edit July something
+# prev min .45, prev max = 2.45
+# Hitec datasheet found in some box, conveniently using same servo
+hitec_servo = Servo(12, min_pulse_width=.58/1000, max_pulse_width=2.38/1000, pin_factory=factory)
 lidar = Lidar_Lite()
 connected = lidar.connect(1)
     
