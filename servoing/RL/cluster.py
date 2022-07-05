@@ -14,19 +14,19 @@ class Cluster():
         
         self.start = start
         self.end = end
-        self.index_range = (end - start) // 2
-        self.center = start + self.index_range
-        self.x_one = filtered_points[0][start].get_x()
-        self.x_two = filtered_points[0][end].get_x()
-        self.y_one = filtered_points[0][start].get_y()
-        self.y_two = filtered_points[0][end].get_y()
-        self.angle_one = filtered_points[0][start].get_angle()
-        self.angle_two = filtered_points[0][end].get_angle()
+        self.index_range = (self.end - self.start) // 2
+        self.center = self.start + self.index_range
+        self.x_one = filtered_points[0][self.start].get_x()
+        self.x_two = filtered_points[0][self.end].get_x()
+        self.y_one = filtered_points[0][self.start].get_y()
+        self.y_two = filtered_points[0][self.end].get_y()
+        self.angle_one = filtered_points[0][self.start].get_angle()
+        self.angle_two = filtered_points[0][self.end].get_angle()
         self.center_angle = filtered_points[0][self.center].get_angle()
         self.width = self.x_two - self.x_one
         self.middle = self.width / 2
-        self.dist_one = filtered_points[0][start].get_distance()
-        self.dist_two = filtered_points[0][end].get_distance()
+        self.dist_one = filtered_points[0][self.start].get_distance()
+        self.dist_two = filtered_points[0][self.end].get_distance()
         self.center_distance = filtered_points[0][self.center].get_distance()
     
     def get_start_index(self):
@@ -56,3 +56,6 @@ class Cluster():
         print("Y1: ", self.y_one)
         print("Width of Cluster: ", self.width)
         print("Middle of Cluster: ", self.middle)
+        print("Center angle: ", self.center_angle)
+        print("Center distance: ", self.center_distance)
+        print()

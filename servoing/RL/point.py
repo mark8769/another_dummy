@@ -19,8 +19,8 @@ class Point():
       self.distance = distance
       self.angle = angle
       
-      self.start_nothing_index = None
-      self.end_nothing_index = None
+      self.start_w_index = None
+      self.end_w_index = None
       self.wall = False
       self.has_wall_index = False
       
@@ -65,6 +65,9 @@ class Point():
     def set_start_w_index(self, index):
         self.has_wall_index = True
         self.start_w_index = index
+    def set_end_w_index(self, index):
+        self.has_wall_index = True
+        self.end_w_index = index
         
     def get_start_wall_index(self):
         if self.start_wall_index is None:

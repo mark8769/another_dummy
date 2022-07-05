@@ -155,28 +155,41 @@ we keep a temp value with the current index where start was found.
 Once we find a point that IS not an obstacle, we update the end_index value
 of where we first found the starting point of our obstacle.
 '''
+# Password for new wifi: steinmetz
 def preprocessing_laser_point(point_list):
 
     start_index = 0
+    edge_case = False
+    one_time_flag = False
     
     for i in range(len(point_list)):
         for j in range(1, len(point_list[0]) - 1):
-        
-            if not point_list[i][j - 1].is_obstacle() and point_list[i][j].is_obstacle():
+            
+            if point_list[i][0].is_obstacle() and not one_time_flag:
+                start_index = 0
+                point_list[i][start_index].set_start_wall_index(start_index)
+                edge_case = True
+                one_time_flag = True
+            
+            # 
+            if edge_case and not point_list[i][j - 1].is_obstacle():
+                point_list[i][start_index].set_end_wall_index(j - 2)
+                edge_case = False
+                
+            if not point_list[i][j - 1].is_obstacle() and point_list[i][j].is_obstacle() and not edge_case:
+                # set as start of new wall
                 point_list[i][j].set_start_wall_index(j)
                 start_index = j
-            if point_list[i][j].is_obstacle() and not point_list[i][j + 1].is_obstacle():
+                    
+            if point_list[i][j].is_obstacle() and not point_list[i][j + 1].is_obstacle() and not edge_case:
+
                 point_list[i][start_index].set_end_wall_index(j)
-        
-            # For determining wall indexes, to not head to walls when scanning?
-            # Not sure this is needed, separation doesn't seem to make sense
-            # because separation was used for obstacles and determining whether robot
-            # could move in between the gaps
-            if not point_list[i][j - 1].is_wall() and point_list[i][j].is_wall():
-                point_list[i][j].set_start_w_index(j)
-                start_index = j
-            if point_list[i][j].is_wall() and not point_list[i][j + 1].is_wall():
-                point_list[i][start_index].set_end_wall_index(j)
+                
+            # if we are one before end of list, and we have an obstacle
+            # just say last point is the end of obstacle since we can't scan further
+            if j == (len(point_list[0]) - 2) and point_list[i][start_index].get_end_wall_index() == -1:
+            
+                point_list[i][start_index].set_end_wall_index(len(point_list[0]) - 1)
         
     return point_list
 
@@ -193,11 +206,12 @@ def add_clusters(lidar_points):
     
     for i in range(len(lidar_points)):
         for j in range(len(lidar_points[0])):
+            
             if lidar_points[i][j].get_has_index():
                 
                 temp_start = lidar_points[i][j].get_start_wall_index()
                 temp_end = lidar_points[i][j].get_end_wall_index()
-                
+ 
                 cluster = Cluster(temp_start, temp_end, lidar_points)
                 cluster_list.append(cluster)
 

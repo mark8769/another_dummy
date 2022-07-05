@@ -76,13 +76,6 @@ def get_lidar_points():
     third_pass = False
     error_counter = 0
     
-    '''
-    temp stuff
-    f = open("dummy_scan.txt", "w")
-    '''
-    f = open("dummy_scan.txt", "w")
-    f.write("lidar_points = numpy.empty([2,37], dtype = object)\n")
-    f.write("lidar_list = {[")
     while True:
         # servo goes from (-90, 90)
         # if we get past 90 want to sweep back
@@ -93,10 +86,7 @@ def get_lidar_points():
             column_helper = -1
             column_counter = 36
             row_counter += 1
-            
-            ##################
-            f.write("]\n[")
-            ##################
+    
             # break on third sweep
 #             if third_pass:
 #                 break
@@ -138,20 +128,10 @@ def get_lidar_points():
         error_counter = 0
         x, y = position_laser_point(angle_counter, lidar_distance)
         point = Point(x,y, lidar_distance, angle_counter)
-        ################
-        if angle_counter != 90:
-            point_string = f"point = Point({x},{y},{lidar_distance},{angle_counter})\n"
-        else:
-            point_string = f"point = Point({x},{y},{lidar_distance},{angle_counter})"
-        print(point_string)
-        f.write(point_string)
-        ################
-        #point.print_point()
         lidar_points[row_counter][column_counter] = point
         angle_counter += angle_helper
         column_counter += column_helper
     
-    f.write("]}")
     return lidar_points
 
 def run_tests():
@@ -217,10 +197,11 @@ def get_servoing_stuff():
     visualize_points(filtered_points)
     temp_max = 0
     temp_cluster = None
+    dummy_cluster = None
     for cluster in cluster_list:
         
         temp_range = cluster.get_end_index() - cluster.get_start_index()
-        
+
         if temp_range >= temp_max:
             
             temp_max = temp_range
