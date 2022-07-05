@@ -8,35 +8,41 @@ Purpose: To store relevant information about obstacles found.
         Note: I might just want to keep a list of points
         from start_index to end_index. But this was a quick class
 '''
-
 class Cluster():
-    def __init__(self, angle, angle_two, start, end, x_one, x_two, y_one, y_two, dist_one, dist_two):
+    # Keep a reference of start/end and reference to list
+    def __init__(self, start, end, filtered_points):
         
-        # TODO: Prob. dont need, save just in case
         self.start = start
         self.end = end
-        # self.width = x2 - x1
-        # start corresponds to x_one
-        # end corresponds to x_two
-        self.x_one = x_one
-        self.x_two = x_two
-        self.y_one = y_one
-        self.y_two = y_two
-        self.angle_one = angle
-        self.angle_two = angle_two
-        self.width = x_two - x_one
+        self.index_range = (end - start) // 2
+        self.center = start + self.index_range
+        self.x_one = filtered_points[0][start].get_x()
+        self.x_two = filtered_points[0][end].get_x()
+        self.y_one = filtered_points[0][start].get_y()
+        self.y_two = filtered_points[0][end].get_y()
+        self.angle_one = filtered_points[0][start].get_angle()
+        self.angle_two = filtered_points[0][end].get_angle()
+        self.center_angle = filtered_points[0][self.center].get_angle()
+        self.width = self.x_two - self.x_one
         self.middle = self.width / 2
-        self.dist_one = dist_one
-        self.dist_two = dist_two
+        self.dist_one = filtered_points[0][start].get_distance()
+        self.dist_two = filtered_points[0][end].get_distance()
+        self.center_distance = filtered_points[0][self.center].get_distance()
     
     def get_start_index(self):
         return self.start
     def get_end_index(self):
         return self.end
+    def get_center_index(self):
+        return self.center
     def get_start_angle(self):
         return self.angle_one
+    def get_center_angle(self):
+        return self.center_angle
     def get_end_angle(self):
         return self.angle_two
+    def get_center_distance(self):
+        return self.center_distance
     def get_width(self):
         return self.width
     def get_middle(self):

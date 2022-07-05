@@ -57,8 +57,6 @@ def trainerFunc():
             else:
                 print(f"New State: {newState}. Reward: {reward}\n")
 
-            
-
             #Update Q-Table with new knowledge
             Q[currentState,action] = Q[currentState,action] + learningRate*(reward + gamma*np.max(Q[newState,:]) - Q[currentState,action])
             rAll += reward
@@ -73,35 +71,35 @@ def trainerFunc():
     # Rotates the Q table 90 degrees, rounds values to fourth decimal, and prints table
     print(np.round(np.rot90(Q), decimals=4))
     
-def write_to_file():
+# def write_to_file():
     
-    current_time = datetime.now()
-    current_time = current_time.strftime("%H_%M_%S")
-    current_time = current_time + ".txt"
-    file_string = current_time
-    f = open(file_string, "w")
+#     current_time = datetime.now()
+#     current_time = current_time.strftime("%H_%M_%S")
+#     current_time = current_time + ".txt"
+#     file_string = current_time
+#     f = open(file_string, "w")
     
-    for i in range (len(Q)):
-        for j in range (len(Q[0])):
+#     for i in range (len(Q)):
+#         for j in range (len(Q[0])):
         
-            if j == len(Q[0] - 1):
-                f.write(Q[i][j]) + "\n"
-            else:
-                f.write(Q[i][j]) + " "
+#             if j == len(Q[0] - 1):
+#                 f.write(Q[i][j]) + "\n"
+#             else:
+#                 f.write(Q[i][j]) + " "
 
-def read_from_file(some_file):
+# def read_from_file(some_file):
     
-    f = open(some_file, "r")
+#     f = open(some_file, "r")
     
-    # will put each row in a list, each row would be another list
-    read_lines = f.readlines()
+#     # will put each row in a list, each row would be another list
+#     read_lines = f.readlines()
     
-    for i in range (len(Q)):
-        # splits list at space
-        read_lines([i]).split()
-        for j in range (len(Q[0])):
+#     for i in range (len(Q)):
+#         # splits list at space
+#         read_lines([i]).split()
+#         for j in range (len(Q[0])):
             
-            Q[i][j] = read_lines[i][j]
+#             Q[i][j] = read_lines[i][j]
         
 def main():
     trainerFunc()

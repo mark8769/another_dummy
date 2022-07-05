@@ -51,7 +51,7 @@ def position_laser_point_pan_tilt(angle_i, tilt_angle, distance):
     Our range: i in the set of (0, 180) or (0, 180) so we exclude the -5 they use.
     '''
     point_xi = distance * math.cos(angle_in_radians) * math.cos(tilt_angle_in_radians)
-    point_yi = distance * math.sin(angle_in_radians) * math.cos(tile_angle_in_radians)    
+    point_yi = distance * math.sin(angle_in_radians) * math.cos(tilt_angle_in_radians)    
 
 def median_filtering(lidar_points):
     '''
@@ -168,7 +168,10 @@ def preprocessing_laser_point(point_list):
             if point_list[i][j].is_obstacle() and not point_list[i][j + 1].is_obstacle():
                 point_list[i][start_index].set_end_wall_index(j)
         
-        
+            # For determining wall indexes, to not head to walls when scanning?
+            # Not sure this is needed, separation doesn't seem to make sense
+            # because separation was used for obstacles and determining whether robot
+            # could move in between the gaps
             if not point_list[i][j - 1].is_wall() and point_list[i][j].is_wall():
                 point_list[i][j].set_start_w_index(j)
                 start_index = j
@@ -187,46 +190,18 @@ def add_clusters(lidar_points):
     cluster_list = []
     temp_start = None
     temp_end = None
-    x_two = None
-    y_one = None
-    x_one = None
-    y_two = None
-    dist_one = None
-    dist_two = None
-    angle = None
-    angle_two = None
     
     for i in range(len(lidar_points)):
         for j in range(len(lidar_points[0])):
             if lidar_points[i][j].get_has_index():
                 
-                # Current cluster signature
-                # def __init__(self, angle, angle_two, start, end, x_one, x_two, y_one, y_two, dist_one, dist_two):
                 temp_start = lidar_points[i][j].get_start_wall_index()
                 temp_end = lidar_points[i][j].get_end_wall_index()
-
-                x_one = lidar_points[i][temp_start].get_x()
-                x_two = lidar_points[i][temp_end].get_x()
-
-                y_one = lidar_points[i][temp_start].get_y()
-                y_two = lidar_points[i][temp_end].get_y()
-
-                angle = lidar_points[i][temp_start].get_angle()
-                angle_two = lidar_points[i][temp_end].get_angle()
-
-                dist_one = lidar_points[i][temp_start].get_distance()
-                dist_two = lidar_points[i][temp_end].get_distance()
                 
-                cluster = Cluster(angle, angle_two, temp_start, temp_end, x_one, x_two, y_one, y_two, dist_one, dist_two)
+                cluster = Cluster(temp_start, temp_end, lidar_points)
                 cluster_list.append(cluster)
 
     return cluster_list
 
-# def add_clusters_to_list(lidar_points):
-#     
-#     temp_wall_index = None
-#     temp_start_obs_index = None
-#     temp_end_obs_index = None
-#     for i in range(len(lidar_points)):
                 
                 

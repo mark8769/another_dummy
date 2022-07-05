@@ -227,7 +227,7 @@ def get_servoing_stuff():
             temp_cluster = cluster
 
     if temp_cluster is None:
-        return -1, -1 
+        return None, None 
     else:
         print("Acquired object")
         #temp_cluster.print_cluster()

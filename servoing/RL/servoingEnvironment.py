@@ -11,6 +11,7 @@ from videoGet import VideoGet
 from obs_two_pass import get_servoing_stuff as get_servoing_two
 from obs_three_pass import get_servoing_stuff as get_servoing_three
 from drive import driver, color_detected_handler
+from simulated_scan import get_dummy_data
 
 class ServoingEnvironment:
 
@@ -71,10 +72,13 @@ class ServoingEnvironment:
         # Sets number of possible states, added state is for no blob detected
         self.numStates = (self.image_divisions * len(self.lidar_distance_dict)) + 1
 
-        # Signifies that blob left RVR's view, or if RVR moved out of bounds
+        # numStates = 7 * 7 + 1 = 50
+        # Signifies that blob left RVR's view, or if RVR moved out of bounds, 49th state
         self.failState = self.numStates - 1
 
         # Gets middle slice of image divisions for reward state
+        # 7 // 2 --> 3 * 7 + (max value of dict values, mine would be 180)
+        # 21 + (index not angle) 6 = 27 ~ middle slice would be 
         self.reward_state = (((self.image_divisions)//2) * len(self.lidar_angle_dict)) + max(self.lidar_angle_dict.values())
         
         self.current_state = self.failState
@@ -114,6 +118,11 @@ class ServoingEnvironment:
         # Gets the measured distance, and respective angle from middle of object
         distance, angle = get_servoing_two()
         #distance, angle = get_servoing_three()
+
+        # if no obstacle found then fail
+        if distance is None or angle is None:
+            state = self.failState
+            return state
         
         # Gets the state of the x-coordinate of the blob
         # I dont think we use distance here, use the angle to replicate whatever they're doing
@@ -121,6 +130,9 @@ class ServoingEnvironment:
         # So my "image width" would be 180 to get the index of whatever I have in the dict
         # this would be the index value for where object is located
         #blobXLocationState = int(angle * self.image_divisions / 180) ;;TODO: Check on Tuesday
+
+        # pull dict items into a list of tuples, dict_items object
+        # dict_items list not subscriptable, cast to list
         angle_entries = self.lidar_angle_dict.items()
         angle_entries = list(angle_entries)
         angle_bin_index = None
@@ -133,11 +145,8 @@ class ServoingEnvironment:
             angle_bin_index = len(self.lidar_angle_dict) - 1
         
         blobXLocationState = angle_bin_index
-        # pull dict items into a list of tuples, dict_items object
         lidar_entries = self.lidar_distance_dict.items()
-        # dict_items list not subscriptable, cast to list
         lidar_entries = list(lidar_entries)
-        
         distance_bin_index = None
         
         for tup in lidar_entries:

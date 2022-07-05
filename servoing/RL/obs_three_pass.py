@@ -1,3 +1,4 @@
+from statistics import median
 from gpiozero import Servo
 import math
 import copy
@@ -26,10 +27,6 @@ from lidar_lite import Lidar_Lite
 factory = PiGPIOFactory()
 # set up servo, GPIO pin 12, min_pulse = .45ms, max_pulse = 2.45ms, use hardware
 # https://hitecrcd.com/files/Servomanual.pdf
-
-#Edit July something
-# prev min .45, prev max = 2.45
-# Hitec datasheet found in some box, conveniently using same servo
 hitec_servo = Servo(12, min_pulse_width=.58/1000, max_pulse_width=2.38/1000, pin_factory=factory)
 # set up lidar lite
 lidar = Lidar_Lite()
@@ -58,7 +55,7 @@ def set_servo_angle(angle, servo):
         
     servo.value = value
 
-def get_lidar_points():
+def get_lidar_points(num_sweeps):
 
     angle_counter = -90
     degree_of_accuracy = 5
@@ -67,7 +64,7 @@ def get_lidar_points():
     lidar_points = []
     # one sweep is 37 points when using 5 degrees of accuracy
     # range from (-90 to 90)
-    lidar_points = numpy.empty([3, 37], dtype=object)
+    lidar_points = numpy.empty([num_sweeps, 37], dtype=object)
     #row, col = 3, 37
     #lidar_points = [[0] * col] * row
     row_counter = 0
@@ -77,6 +74,14 @@ def get_lidar_points():
     third_pass = False
     error_counter = 0
 
+
+
+    '''
+    for i in range (0, len(lidar_points)):
+        
+
+
+    '''
     while True:
         # servo goes from (-90, 90)
         # if we get past 90 want to sweep back
@@ -100,17 +105,18 @@ def get_lidar_points():
             # complete one sweep to left, then right.
             # Set to true, to break on third pass
             third_pass = True
+
+            if len(lidar_points == 2):
+                break
         
         set_servo_angle(angle_counter, hitec_servo)
-        sleep(0.06)
+        sleep(0.06) # some sleep to allow servo to move to angle
         lidar_distance = lidar.getDistance()
         
-        # if we get a bad reading, want to do take reading again
-        # keep getting readings until we dont get -1
-        # Edit: apparently after an error, we get about 10-15 bad readings
-        # needed to modify this to account for this error
-        # else only most inner whil0  0  0  -  -  -  -  -  -  -  -  e loop needed
-        # if you're confused, lower the first while loop to 1 - 5 insteaf of 20
+        # Keep taking readings, until errors stop.
+        # Error returns -1.
+        # After an error we get ~15-20 bad readings, get 20 dummy distances
+        # so we can remove noise from lidar readings.
         if lidar_distance == -1:
             
             while error_counter < 20:
@@ -127,17 +133,17 @@ def get_lidar_points():
         error_counter = 0
         x, y = position_laser_point(angle_counter, lidar_distance)
         point = Point(x,y, lidar_distance, angle_counter)
-        #point.print_point()
+
         lidar_points[row_counter][column_counter] = point
         angle_counter += angle_helper
         column_counter += column_helper
     
     return lidar_points
 
-def run_tests():
+def run_tests(num_sweeps):
 
-    lidar_points = numpy.empty([3, 37], dtype=object)
-    lidar_points = get_lidar_points()
+    lidar_points = numpy.empty([num_sweeps, 37], dtype=object)
+    lidar_points = get_lidar_points(num_sweeps)
     # dont want to set obstacle for filtered points, so use this when creating filtered
     # make a copy, dont want to alias existing list
     # deepcopy if list contains objects
@@ -151,7 +157,11 @@ def run_tests():
     
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
     _, lidar_points = median_filtering(lidar_points)
-    filtered_points, temp_lidar_points = median_filtering(temp_lidar_points)
+
+    if num_sweeps == 2:
+        filtered_points, temp_lidar_points = median_filtering_two_pass(temp_lidar_points)
+    else:
+        filtered_points, temp_lidar_points = median_filtering(temp_lidar_points)
     
     print()
     print("AFTER FILTERING")
@@ -176,18 +186,23 @@ def run_tests():
         cluster.print_cluster()
         
         
-def get_servoing_stuff():
-
-    lidar_points = numpy.empty([3, 37], dtype=object)
+def get_servoing_stuff(num_sweeps):
+    # Create empty lists to put data in
+    lidar_points = numpy.empty([num_sweeps, 37], dtype=object)
     filtered_points = numpy.empty([1, len(lidar_points[0])], dtype=object)
     
     lidar_points = get_lidar_points()
-    filtered_points, _ = median_filtering(lidar_points)
     
+    if num_sweeps == 2:
+        filtered_points, _ = median_filtering_two_pass(lidar_points)
+    else:
+        filtered_points, _ = median_filtering(lidar_points)
+
     filtered_points = preprocessing_laser_point(filtered_points)
     cluster_list = add_clusters(filtered_points)
-    
+
     visualize_points(filtered_points)
+
     temp_max = 0
     temp_cluster = None
     for cluster in cluster_list:
@@ -200,35 +215,16 @@ def get_servoing_stuff():
             temp_cluster = cluster
 
     if temp_cluster is None:
-        return -1, -1
-    else:
-        print("Acquired object")
-        #temp_cluster.print_cluster()
+        return None, None
     
+    distance = temp_cluster.get_center_distance()    
+    angle = temp_cluster.get_center_angle()
     
-    start_index = temp_cluster.get_start_index()
-    end_index = temp_cluster.get_end_index()
-
-    index_range = end_index - start_index
-    index_range = index_range // 2
-    
-    index_to_access = start_index + index_range
-    
-    for i in range(len(filtered_points)):
-        for j in range(start_index, end_index + 1):
-            filtered_points[i][j].print_point()
-    
-    distance = filtered_points[0][index_to_access].get_distance()    
-    angle = filtered_points[0][index_to_access].get_angle()
-    
-    print(angle)
+    #print(angle)
     if angle <= 0:
         angle = abs(angle) + 90
     else:
         angle = abs(angle - 90)
-    
-    # return the distance of the middle point in the cluster
-    # return the angle of the middle point in the cluster
     
     return distance, angle
 

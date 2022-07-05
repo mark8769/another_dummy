@@ -33,6 +33,8 @@ def visualize_points(lidar_points):
                 string = "  "
             if lidar_points[i][j].is_obstacle():
                 print("-", end=string)
+            elif lidar_points[i][j].is_wall():
+                print("X", end=string)
             else:
                 print("0", end=string)
     print()
