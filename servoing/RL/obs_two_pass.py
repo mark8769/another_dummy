@@ -196,13 +196,16 @@ def get_servoing_stuff():
     
     visualize_points(filtered_points)
     temp_max = 0
+    temp_dist_max = 0
+    dist_max = None
     temp_cluster = None
     dummy_cluster = None
     for cluster in cluster_list:
         
+        temp_dist_max = cluster.get_center_distance()
         temp_range = cluster.get_end_index() - cluster.get_start_index()
-
-        if temp_range >= temp_max:
+        
+        if temp_range >= temp_max and temp_range <= 7 and temp_range > 1 and dist_max < temp_dist_max:
             
             temp_max = temp_range
             temp_cluster = cluster
@@ -211,18 +214,10 @@ def get_servoing_stuff():
         return None, None 
     else:
         print("Acquired object")
-        #temp_cluster.print_cluster()
+        temp_cluster.print_cluster()
         
-    
-    start_index = temp_cluster.get_start_index()
-    end_index = temp_cluster.get_end_index()
-
-    index_range = end_index - start_index
-    index_range = index_range // 2
-    index_to_access = start_index + index_range
-    
-    distance = filtered_points[0][index_to_access].get_distance()    
-    angle = filtered_points[0][index_to_access].get_angle()
+    distance = temp_cluster.get_center_distance()    
+    angle = temp_cluster.get_center_angle()
     
     print(angle)
     if angle <= 0:

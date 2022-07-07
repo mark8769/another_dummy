@@ -58,7 +58,6 @@ class ServoingEnvironment:
         
         # Sets the number of vertical bins the frame is sliced into
         # Curr for lidar = 7 also, the pi slices.
-        self.image_divisions = 7
         # This would be about our 7 divisions
         # X could be somewhere in here
         # average x_state = (0 - 90: 0), (90 - 180: 1), (180 - 270: 2)
@@ -67,8 +66,10 @@ class ServoingEnvironment:
         
         # This is used to decide which sonar distance state the RVR in
         #self.distanceStateDict = [[240,0], [160, 1], [80,2], [20,3], [5,4], [0,5]]
-        self.lidar_angle_dict = {30:0, 60:1, 85:2, 95:3, 120:4, 150:5, 180:6}
-        self.lidar_distance_dict = {20:0, 40:1, 60:2, 80:3, 100:4, 120:5, 140:6}
+        self.lidar_angle_dict = {30:0, 60:1, 80:2, 100:3, 120:4, 150:5, 180:6}
+        self.image_divisions = len(self.lidar_angle_dict)
+        #self.lidar_distance_dict = {20:0, 40:1, 60:2, 80:3, 100:4, 120:5, 140:6}
+        self.lidar_distance_dict = {50:0, 60:1, 80:2, 100:3, 120:4, 140:5, 160:6}
         # Sets number of possible states, added state is for no blob detected
         self.numStates = (self.image_divisions * len(self.lidar_distance_dict)) + 1
 
@@ -99,13 +100,13 @@ class ServoingEnvironment:
         """This has the RVR place itself into a somewhat-random starting position by rotating"""
         print("RVR being reset")
         state = self.failState
-        #restartDriveCommand, restartLeftTrack, restartRightTrack = self.randomRestart() todo: remove for now, bring back later
-        #asyncio.run(driver(*restartDriveCommand))
+        restartDriveCommand, restartLeftTrack, restartRightTrack = self.randomRestart()
+        asyncio.run(driver(*restartDriveCommand))
         
         # The RVR will rotate until it sees a blob. (Search mode)
         while state == self.failState:
             # move first, then get_state
-            #asyncio.run(driver(*[self.rvr, restartLeftTrack, restartRightTrack, .2, 180, "Scanning"])) todo: remove for now, bring back later
+            asyncio.run(driver(*[self.rvr, restartLeftTrack, restartRightTrack, .2, 180, "Scanning"]))
             # I am assuming get my width and midpoint here, instead of blob
             state = self.get_state()
 
@@ -145,6 +146,7 @@ class ServoingEnvironment:
             angle_bin_index = len(self.lidar_angle_dict) - 1
         
         blobXLocationState = angle_bin_index
+        
         lidar_entries = self.lidar_distance_dict.items()
         lidar_entries = list(lidar_entries)
         distance_bin_index = None
@@ -156,12 +158,13 @@ class ServoingEnvironment:
                 
         if distance_bin_index is None:
             distance_bin_index = len(self.lidar_distance_dict) - 1
-
+    
         # Combines the blob x-coordinate state and blob size into a single state
-        state = (blobXLocationState * len(self.lidar_distance_dict)) + distance_bin_index
+        state = (blobXLocationState * len(self.lidar_distance_dict)) + 6
+        # I think this line is somehow messing up the drive commands.
+        #+ distance_bin_index
         print(f"xLocState: {blobXLocationState}, Distance: {distance_bin_index}, Combined State: {state}")
         self.rvr.led_control.set_all_leds_rgb(red=255, green=165, blue=0)
-        
         return state
 
     def step(self, action):

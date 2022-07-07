@@ -10,7 +10,8 @@ Purpose: Store lidar point cloud data
 '''
 class Point():
     
-    obstacle_threshold = 400
+    # previously 200 cm
+    obstacle_threshold = 200
     
     def __init__(self, x, y, distance, angle):
       
